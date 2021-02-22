@@ -5,7 +5,7 @@ const cors = require("cors");
 
 //Import Routes
 const authRoute = require('./routes/auth')
-const postRoute = require('./routes/posts')
+const resultsRoute = require("./routes/results");
 
 
 const app = express();
@@ -33,7 +33,8 @@ app.use(express.json());
 
 //Route middlewear
 app.use('/api/user', authRoute);
-app.use('/api/posts', postRoute)
+app.use("/api/results", resultsRoute);
+
 
 
 
