@@ -35,8 +35,13 @@ app.use(express.json());
 app.use('/api/user', authRoute);
 app.use("/api/results", resultsRoute);
 
+//test deployment
+app.get('/', (req, res) => {
+  res.send("Success");
+});
 
-//test route 
+
+//image uploading success/failure route 
 app.post('/temp/images', (req, res) => {
    res.json(req.body);
 });
