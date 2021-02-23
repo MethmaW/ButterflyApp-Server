@@ -44,4 +44,6 @@ app.post('/temp/images', (req, res) => {
 
 
 
-app.listen(process.env.LOCAL_PORT, () => console.log("Server is up and running"))
+app.listen(process.env.PORT || process.env.LOCAL_PORT, () =>
+  console.log("Server is up and running")
+);
