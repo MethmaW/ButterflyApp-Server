@@ -36,6 +36,12 @@ app.use('/api/user', authRoute);
 app.use("/api/results", resultsRoute);
 
 
+//test route 
+app.post('/temp/images', (req, res) => {
+   res.json(req.body);
+});
+
+
 
 
 app.listen(process.env.LOCAL_PORT, () => console.log("Server is up and running"))

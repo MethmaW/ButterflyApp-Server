@@ -85,12 +85,14 @@ router.post("/confirm-email", async (req, res) => {
   //hash the password
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  
 
   //create new user
   const user = new User({
     name: req.body.name,
     email: req.body.email,
     password: hashedPassword,
+    img: req.body.img,
   });
 
   if (req.body.code === twofaCodeString) {
@@ -111,25 +113,23 @@ router.post("/confirm-email", async (req, res) => {
 
 
 //----------------------------Login Route----------------------------------
-router.post('/login', async (req, res) => {
-  //input validation
-  const { error } = loginValidation(req.body);
-  if (error) return res.send(error.details[0].message);
-
+router.post("/login", async (req, res) => {
+  
   //check if the email exists in the DB
-  const userRecord = await User.findOne({ email: req.body.email });
-  if (!userRecord) return res.send({error: "Email not found"});
+  const userRecord = await User.findOne({
+    $or: [{ email: req.body.email }, { name: req.body.email }],
+  });
+  if (!userRecord) return res.send({ error: "Username or email not found" });
 
   //temp saving the current login user email
-  currentUserLoginEmail = req.body.email
+  currentUserLoginEmail = req.body.email;
 
   //check if the password is correct
   const validPass = await bcrypt.compare(
     req.body.password,
     userRecord.password
   );
-  if (!validPass) return res.send({error: "Invalid password"});
-
+  if (!validPass) return res.send({ error: "Invalid password" });
 
   //2 factor authentication - send email
   var transporter = nodemailer.createTransport({
@@ -140,7 +140,7 @@ router.post('/login', async (req, res) => {
     },
   });
 
-  passcodeGenerator()
+  passcodeGenerator();
 
   var mailOptions = {
     from: process.env.APP_EMAIL,
@@ -152,17 +152,15 @@ router.post('/login', async (req, res) => {
     <p>ButterflyApp</p>`,
   };
 
-
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
       res.send("Email not found");
     } else {
       console.log("Email sent: " + info.response);
-      res.send({loginStatus: "success"});
+      res.send({ loginStatus: "success" });
     }
   });
-
 });
 
 
