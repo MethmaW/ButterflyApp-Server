@@ -171,7 +171,9 @@ router.post('/confirm-passcode', async (req, res) => {
     req.body.code === twofaCodeString &&
     req.body.email === currentUserLoginEmail
   ) {
-    const userRecord = await User.findOne({ email: req.body.email });
+    const userRecord = await User.findOne({
+      $or: [{ email: req.body.email }, { name: req.body.email }],
+    });
     const token = jwt.sign({ _id: userRecord._id }, process.env.TOKEN_SECRET);
     res.send({token: token});
   } else {
