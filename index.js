@@ -17,7 +17,7 @@ app.use(cors());
 
 //Connect to DB
 mongoose.connect(
-  "mongodb+srv://admin-methma:test123@cluster0.14js5.mongodb.net/butterfliesDB",
+  process.env.CONNECT_DB,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
