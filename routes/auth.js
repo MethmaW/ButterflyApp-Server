@@ -51,7 +51,7 @@ router.post('/register', async (req, res) => {
 
   var mailOptions = {
     from: process.env.APP_EMAIL,
-    to: emailExist.email,
+    to: req.body.email,
     subject: "[no-reply] ButterflyApp Passcode",
     html: `<p>Hello ${emailExist.name},</p>
     <p>Thank you for registering your account with ButterflyApp. Please use <b>${twofaCodeString}</b> as the passcode to verify your email address. This passcode is valid for one-time use only.</p>
