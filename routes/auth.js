@@ -51,9 +51,9 @@ router.post('/register', async (req, res) => {
 
   var mailOptions = {
     from: process.env.APP_EMAIL,
-    to: "methma.cw@gmail.com",
+    to: emailExist.email,
     subject: "[no-reply] ButterflyApp Passcode",
-    html: `<p>Hello Test,</p>
+    html: `<p>Hello ${emailExist.name},</p>
     <p>Thank you for registering your account with ButterflyApp. Please use <b>${twofaCodeString}</b> as the passcode to verify your email address. This passcode is valid for one-time use only.</p>
     <p>Thank you,</p>
     <p>ButterflyApp</p>`,
@@ -207,9 +207,9 @@ router.post('/forgot-password', async (req, res) => {
 
     var mailOptions = {
       from: process.env.APP_EMAIL,
-      to: "methma.cw@gmail.com",
+      to: userRecord.email,
       subject: "[no-reply] ButterflyApp Passcode",
-      html: `<p>Hello Test,</p>
+      html: `<p>Hello ${userRecord.name},</p>
     <p>Please use <b>${twofaCodeString}</b> as the passcode to verify your email and reset the password. This passcode is valid for one-time use only.</p>
     <p>Thank you,</p>
     <p>ButterflyApp</p>`,
