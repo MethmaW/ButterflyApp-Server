@@ -144,7 +144,7 @@ router.post("/login", async (req, res) => {
 
   var mailOptions = {
     from: process.env.APP_EMAIL,
-    to: "methma.cw@gmail.com",
+    to: userRecord.name,
     subject: "[no-reply] ButterflyApp Passcode",
     html: `<p>Hello Test,</p>
     <p>Please use <b>${twofaCodeString}</b> as the ButterflyApp passcode for the current login session. This passcode is valid for one-time use only.</p>
